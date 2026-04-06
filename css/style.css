@@ -49,11 +49,17 @@ html, body {
 #map {
     position: absolute;
     top: var(--header-height);
-    left: 0; right: 0; bottom: 0;
+    left: 0; right: 0; bottom: 80px;
+    transition: right 0.3s ease;
 }
+
 /* OCEAN COLOR*/
 .leaflet-container {
     background: #1b3f75b7 !important;
+}
+
+#map.panel-open {
+    right: var(--panel-width);
 }
 
 /* SIDE PANEL */
@@ -62,17 +68,18 @@ html, body {
     top: var(--header-height);
     right: 0;
     width: var(--panel-width);
-    height: calc(100vh - var(--header-height));
+    height: calc(100vh - var(--header-height) - 36px);
     background: #0d0e1a;
     border-left: 1px solid var(--border);
     z-index: 1000;
-    display: none;
     padding: 20px;
     overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
 }
 
 #panel.open {
-    display: block;
+    transform: translateX(0);
 }
 
 /*PANEL HEADER -- Flagge und Test usw)*/
@@ -98,3 +105,65 @@ html, body {
 }
 
 .ph-btn:hover { color: var(--text); }
+
+
+/* FOOTER */
+#footer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: rgba(7,8,15,0.95);
+    border-top: 1px solid var(--border);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+#ticker {
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+    color: var(--muted);
+    white-space: nowrap;
+    animation: ticker 20s linear infinite;
+}
+
+@keyframes ticker {
+    from { transform: translateX(100vw); }
+    to   { transform: translateX(-100%); }
+}
+
+/* WIRTSCHAFTSDATEN */
+.econ-section {
+    margin-top: 16px;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+}
+
+.econ-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.econ-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    flex: 1;
+}
+
+.econ-val {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--green);
+    margin-right: 8px;
+}
+
+.econ-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+}
+
