@@ -1,29 +1,100 @@
-html {
-    height: 100%;
-}
-body {
-    margin: 0;
-    height: 100%;
+:root {
+    --bg: #07080f;
+    --header-height: 85px;
+    --panel-width: 350px;
+    --green: #00e676;
+    --border: rgba(255,255,255,0.07);
+    --text: #e2e4f0;
+    --muted: #8a8daa;
 }
 
-#map {
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
 }
 
-#panel {
+/* HEADER */
+#header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-height);
+    background: rgba(7,8,15,0.95);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 60px;
+    letter-spacing: 0.12em;
+    color: var(--text);
+    padding-top: 1%;
+}
+
+.logo em {
+    color: var(--green);
+    font-style: normal;
+}
+
+/* MAP */
+#map {
     position: absolute;
-    top: 0;
-    right: -350px;
-    width: 350px;
-    height: 100vh;
-    background: #1a1a1a;
-    color: white;
-    padding: 20px;
+    top: var(--header-height);
+    left: 0; right: 0; bottom: 0;
+}
+/* OCEAN COLOR*/
+.leaflet-container {
+    background: #1b3f75b7 !important;
+}
+
+/* SIDE PANEL */
+#panel {
+    position: fixed;
+    top: var(--header-height);
+    right: 0;
+    width: var(--panel-width);
+    height: calc(100vh - var(--header-height));
+    background: #0d0e1a;
+    border-left: 1px solid var(--border);
     z-index: 1000;
-    transition: right 0.3s ease;
+    display: none;
+    padding: 20px;
+    overflow-y: auto;
 }
 
 #panel.open {
-    right: 0;
+    display: block;
 }
+
+/*PANEL HEADER -- Flagge und Test usw)*/
+.ph {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.ph-flag { font-size: 50px; margin-bottom: 1%; }
+.ph-name { font-size: 50px; font-weight: 600; }
+.ph-capital { font-family: 'DM Mono', monospace; font-size: 20x; color: var(--muted); }
+
+.ph-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 4px 10px;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+}
+
+.ph-btn:hover { color: var(--text); }

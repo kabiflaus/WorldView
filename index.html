@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>WorldView</title>
-
+    <meta charset="UTF-8"> 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <!-- Eigenes CSS -->
-    <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/style.css" />
 </head>
+<header id="header">
+    <span class="logo">WORLD<em>·</em>VIEW</span>
+</header>
 <body>
 
     <div id="map"></div>
     
         <div id="panel">
-            <h2 id="panel-name">Kein Land ausgewählt</h2>
+    <div class="ph">
+        <div class="ph-left">
+            <div class="ph-flag" id="p-flag"></div>
+            <div class="ph-name" id="p-name"></div>
+            <div class="ph-capital" id="p-cap"></div>
         </div>
+        <div class="ph-actions">
+            <button class="ph-btn close-btn" onclick="closePanel()">✕</button>
+        </div>
+    </div>
+</div>
 
 
     <!-- Eigenes JS -->
