@@ -27,9 +27,17 @@ fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/coun
                         e.target.setStyle({ fillOpacity: 0, fillColor: '#ffffff' });
                     },
                     click: function(e) {
-                        alert(feature.properties.name);
+                    L.DomEvent.stopPropagation(e);
+                    const name = feature.properties.name;
+                    document.getElementById('panel-name').textContent = name;
+                    document.getElementById('panel').classList.add('open');
                     }
                 });
             }
         }).addTo(map);
     });
+
+    // Panel schließen wenn man auf die Karte klickt
+    map.on('click', function() {
+    document.getElementById('panel').classList.remove('open');
+});
