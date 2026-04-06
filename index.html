@@ -14,6 +14,8 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <!-- Eigenes CSS -->
     <link rel="stylesheet" href="css/style.css" />
+     <!-- Bezier Kurven  -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-curve@0.1.0/leaflet.curve.js"></script>
 </head>
 <header id="header">
     <span class="logo">WORLD<em>·</em>VIEW</span>
@@ -22,6 +24,10 @@
 <body>
 
     <div id="map"></div>
+
+    <div id="map-controls">
+    <button id="btn-oil" class="map-btn" onclick="toggleOilRoutes()">🛢 Öl-Routen</button>
+</div>
 
     <div id="panel">
         <div class="ph">

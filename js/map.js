@@ -34,6 +34,120 @@ const ZOOM_EXCEPTIONS = ['United States of America', 'Russia', 'France', 'Norway
 let selectedLayer = null;
 
 // ═══════════════════════════════════
+// ÖL-ROUTEN
+// Quellen: J.P. Morgan / Kpler Daten (Dezember 2025)
+// ═══════════════════════════════════
+const OIL_ROUTES = [
+    {
+        id: 'persian-gulf-europe',
+        label: 'Persischer Golf → Europa',
+        type: 'Rohöl (Brent)',
+        origin: 'Saudi Aramco / ADNOC',
+        volume: '~4 Mio. Barrel/Tag',
+        color: '#cc2200',
+        path: [[26,56],[24,53],[20,50],[15,47],[12,44],[11,43],[12,40],[13,37],[14,35],[14,33],[12,30],[8,25],[4,15],[0,5],[-5,-5],[-10,-15],[-15,-20],[-20,-18],[-28,-10],[-33,0],[-35,15],[-33,28],[-25,40],[-15,48],[-5,55],[5,58],[15,55],[25,45],[35,35],[42,20],[46,10],[49,3],[51,1],[53,4],[55,8],[55,12]]
+    },
+    {
+        id: 'persian-gulf-china',
+        label: 'Persischer Golf → China',
+        type: 'Rohöl (Arab Light)',
+        origin: 'Saudi Aramco / NIOC',
+        volume: '~6 Mio. Barrel/Tag',
+        color: '#cc2200',
+        path: [[26,56],[22,62],[18,68],[12,72],[8,76],[5,82],[3,88],[4,95],[6,100],[8,104],[12,108],[18,112],[22,116],[28,119],[30,121]]
+    },
+    {
+        id: 'persian-gulf-india',
+        label: 'Persischer Golf → Indien',
+        type: 'Rohöl (Arab Light)',
+        origin: 'Saudi Aramco',
+        volume: '~2 Mio. Barrel/Tag',
+        color: '#cc2200',
+        path: [[26,56],[24,60],[22,64],[20,68],[19,72]]
+    },
+    {
+        id: 'russia-china',
+        label: 'Russland → China',
+        type: 'Rohöl (ESPO Blend)',
+        origin: 'Rosneft',
+        volume: '~2 Mio. Barrel/Tag',
+        color: '#0055cc',
+        path: [[52,58],[54,65],[55,73],[53,83],[50,90],[48,103],[45,110],[42,118],[38,121]]
+    },
+    {
+        id: 'russia-europe',
+        label: 'Russland → Europa (Druzhba)',
+        type: 'Rohöl (Urals)',
+        origin: 'Rosneft / Lukoil',
+        volume: '~0.5 Mio. Barrel/Tag',
+        color: '#0055cc',
+        path: [[55,37],[52,30],[50,23],[50,19],[51,16],[52,13],[52,10]]
+    },
+    {
+        id: 'us-europe',
+        label: 'USA → Europa',
+        type: 'Rohöl (WTI)',
+        origin: 'US Shale Producers',
+        volume: '~1.5 Mio. Barrel/Tag',
+        color: '#cc6600',
+        path: [[30,-90],[32,-82],[35,-75],[38,-68],[42,-55],[45,-40],[47,-25],[48,-12],[49,-5],[51,1]]
+    },
+    {
+        id: 'west-africa-china',
+        label: 'Westafrika → China',
+        type: 'Rohöl (Bonny Light)',
+        origin: 'Nigeria / Angola',
+        volume: '~1 Mio. Barrel/Tag',
+        color: '#006600',
+        path: [[5,5],[0,2],[-5,-2],[-10,-5],[-15,-5],[-20,0],[-28,10],[-33,25],[-35,38],[-32,50],[-26,62],[-18,72],[-8,82],[2,90],[5,80],[8,76],[6,82],[4,88],[5,95],[8,100],[12,104],[15,108],[20,113],[25,118],[30,121]]
+    }
+];
+
+let oilLayerGroup = null;
+let oilActive = false;
+
+function toggleOilRoutes() {
+    oilActive = !oilActive;
+    document.getElementById('btn-oil').classList.toggle('active', oilActive);
+
+    if (!oilActive) {
+        if (oilLayerGroup) {
+            map.removeLayer(oilLayerGroup);
+            oilLayerGroup = null;
+        }
+        return;
+    }
+
+    oilLayerGroup = L.layerGroup();
+
+    OIL_ROUTES.forEach(route => {
+        const line = L.polyline(route.path, {
+            color: route.color,
+            weight: 4,
+            opacity: 0.8,
+            smoothFactor: 3,
+            dashArray: '6 4'
+        });
+
+        line.bindPopup(`
+            <div style="font-family:'DM Mono',monospace; font-size:11px; min-width:200px">
+                <div style="font-size:13px; font-weight:600; margin-bottom:8px">${route.label}</div>
+                <div style="color:#8a8daa">Typ</div>
+                <div style="margin-bottom:4px">${route.type}</div>
+                <div style="color:#8a8daa">Produzent</div>
+                <div style="margin-bottom:4px">${route.origin}</div>
+                <div style="color:#8a8daa">Volumen</div>
+                <div>${route.volume}</div>
+            </div>
+        `);
+
+        oilLayerGroup.addLayer(line);
+    });
+
+    oilLayerGroup.addTo(map);
+}
+
+// ═══════════════════════════════════
 // WELTBANK DATEN
 // Lädt GDP, Schulden, Inflation etc. per Land
 // Cache verhindert doppelte API Calls
