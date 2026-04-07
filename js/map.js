@@ -190,7 +190,13 @@ async function loadWorldBankData(isoCode) {
 // ═══════════════════════════════════
 // KARTE INITIALISIEREN
 // ═══════════════════════════════════
-const map = L.map('map').setView([20, 0], 2);
+const map = L.map('map', {
+    worldCopyJump: false,
+    maxBounds: [[-60, -180], [90, 180]],
+    maxBoundsViscosity: 1.0,
+    minZoom: 3,
+    maxZoom: 10,
+}).setView([30, 10], 3);
 
 // ═══════════════════════════════════
 // LÄNDERGRENZEN LADEN
@@ -297,7 +303,7 @@ loadMeta().then(() => {
         }
         document.getElementById('panel').classList.remove('open');
         document.getElementById('map').classList.remove('panel-open');
-        map.flyTo([20, 0], 2, { duration: 1 });
+        map.flyTo([20, 0], 1, { duration: 1 });
     });
 
  // ═══════════════════════════════════
