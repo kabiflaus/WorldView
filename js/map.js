@@ -192,7 +192,7 @@ async function loadWorldBankData(isoCode) {
 // ═══════════════════════════════════
 const map = L.map('map', {
     worldCopyJump: false,
-    maxBounds: [[-60, -180], [90, 180]],
+    maxBounds: [[-60, -210], [85, 210]],
     maxBoundsViscosity: 1.0,
     minZoom: 3,
     maxZoom: 10,
@@ -247,7 +247,7 @@ loadMeta().then(() => {
                                 selectedLayer = null;
                                 document.getElementById('panel').classList.remove('open');
                                 document.getElementById('map').classList.remove('panel-open');
-                                map.flyTo([20, 0], 2, { duration: 1 });
+                                map.flyTo([25, 10], 3, { duration: 1 });
                                 return;
                             }
 
@@ -303,7 +303,7 @@ loadMeta().then(() => {
         }
         document.getElementById('panel').classList.remove('open');
         document.getElementById('map').classList.remove('panel-open');
-        map.flyTo([20, 0], 1, { duration: 1 });
+        map.flyTo([25, 10], 3, { duration: 1 });
     });
 
  // ═══════════════════════════════════

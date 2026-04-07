@@ -31,8 +31,10 @@ html, body {
     background: rgba(7,8,15,0.95);
     border-bottom: 1px solid var(--border);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 6px;
     z-index: 2000;
 }
 
@@ -41,7 +43,7 @@ html, body {
     font-size: 60px;
     letter-spacing: 0.12em;
     color: var(--text);
-    padding-top: 1%;
+    padding-top: 50px;
 }
 
 .logo em {
@@ -49,11 +51,51 @@ html, body {
     font-style: normal;
 }
 
+/* TABS */
+.tab-content {
+    display: none;
+    position: fixed;
+    top: var(--header-height);
+    left: 0; right: 0; bottom: 80px;
+    overflow-y: auto; 
+}
+
+.tab-inner { padding-top: 80px; 
+    padding: 32px; 
+    height: 100%; 
+    max-width: 640px; 
+    margin: 0 auto; 
+    padding-top: 80px; 
+    scrollbar-width: none;
+}
+
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 5px 14px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--muted);
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: all 0.15s;
+    margin-top: 3%;
+}
+
+.tab-btn:hover { color: var(--text); border-color: var(--border); }
+.tab-btn.active { color: var(--green); border-color: rgba(0,230,118,0.3); background: rgba(0,230,118,0.05); }
+
 /* MAP */
 #map {
     position: absolute;
-    top: var(--header-height);
-    left: 0; right: 0; bottom: 80px;
+    top: 0;
+    left: 0; right: 0; bottom: 0;
     transition: right 0.3s ease;
 }
 
@@ -204,13 +246,61 @@ html, body {
     background: #0d0e1a;
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 0;
-    color: #e2e4f0;
-}
+    color: #e2e4f0;}
 
-.leaflet-popup-tip {
-    background: #0d0e1a;
-}
+.leaflet-popup-tip {background: #0d0e1a;}
 
-.leaflet-popup-close-button {
-    color: #8a8daa !important;
-}
+.leaflet-popup-close-button {color: #8a8daa !important;}
+
+/* TO DO Liste */
+.todo-title { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 0.1em; margin-bottom: 16px; }
+.todo-input-row { display: flex; gap: 8px; max-width: 640px; margin-bottom: 24px; }
+.todo-input { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 13px; padding: 10px 14px; outline: none; }
+.todo-input:focus { border-color: rgba(0,230,118,0.4); }
+.todo-input::placeholder { color: var(--muted); }
+.todo-add-btn { background: rgba(0,230,118,0.1); border: 1px solid rgba(0,230,118,0.3); color: var(--green); font-size: 20px; padding: 0 16px; cursor: pointer; }
+.todo-list { list-style: none; max-width: 640px; display: flex; flex-direction: column; gap: 6px; }
+.todo-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); }
+.todo-item.done .todo-text { text-decoration: line-through; color: var(--muted); }
+.todo-check { width: 16px; height: 16px; border: 1px solid var(--muted); background: none; cursor: pointer; font-size: 10px; color: var(--green); }
+.todo-item.done .todo-check { border-color: var(--green); background: rgba(0,230,118,0.1); }
+.todo-text { flex: 1; font-family: 'DM Mono', monospace; font-size: 13px; }
+.todo-delete { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 14px; padding: 2px 6px; opacity: 0; }
+.todo-item:hover .todo-delete { opacity: 1; }
+.todo-delete:hover { color: #ff3d5a; }
+.todo-category { list-style: none; margin-bottom: 16px; }
+.todo-cat-header { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); margin-bottom: 4px; }
+.todo-cat-name { flex: 1; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.08em; }
+.todo-cat-add { font-family: 'DM Mono', monospace; font-size: 11px; background: none; border: 1px solid var(--border); color: var(--muted); padding: 3px 8px; cursor: pointer; }
+.todo-cat-add:hover { color: var(--green); border-color: rgba(0,230,118,0.3); }
+.todo-items { list-style: none; padding-left: 16px; display: flex; flex-direction: column; gap: 4px; }
+.todo-cat-header .todo-delete { opacity: 1; }
+
+/* Lexikon */
+.lex-header { margin-bottom: 24px; }
+.lex-item { border: 1px solid var(--border); margin-bottom: 6px; cursor: pointer; transition: border-color 0.15s; }
+.lex-item:hover { border-color: rgba(255,255,255,0.15); }
+.lex-item.open { border-color: rgba(0,230,118,0.3); }
+.lex-top { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+.lex-begriff { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.08em; min-width: 180px; }
+.lex-kurz { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); flex: 1; }
+.lex-arrow { color: var(--muted); font-size: 12px; transition: transform 0.2s; }
+.lex-item.open .lex-arrow { transform: rotate(90deg); color: var(--green); }
+.lex-body { display: none; padding: 0 16px 16px; font-size: 13px; line-height: 1.7; color: var(--muted); border-top: 1px solid var(--border); padding-top: 12px; }
+.lex-item.open .lex-body { display: block; }
+.lex-filter-row { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+.lex-filter-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 4px 12px; background: transparent; border: 1px solid var(--border); color: var(--muted); cursor: pointer; transition: all 0.15s; text-transform: uppercase; }
+.lex-filter-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+.lex-filter-btn.active { color: var(--green); border-color: rgba(0,230,118,0.3); background: rgba(0,230,118,0.05); }
+.lex-kategorie-titel { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.1em; color: var(--muted); margin: 24px 0 8px; }
+
+/* Stonks */
+.stonks-loading { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); padding: 16px; }
+.chain-titel { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.1em; color: var(--muted); margin: 24px 0 12px; }
+.chain-nodes { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-bottom: 8px; }
+.chain-node { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 14px; transition: border-color 0.15s; }
+.chain-node:hover { border-color: rgba(255,255,255,0.15); }
+.node-symbol { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.08em; color: var(--green); }
+.node-name { font-size: 13px; font-weight: 600; margin: 2px 0; }
+.node-rolle { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-bottom: 8px; }
+.node-preis { font-family: 'DM Mono', monospace; font-size: 13px; }

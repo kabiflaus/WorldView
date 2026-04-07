@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap"
@@ -14,21 +15,26 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <!-- Eigenes CSS -->
     <link rel="stylesheet" href="css/style.css" />
-     <!-- Bezier Kurven  -->
+    <!-- Bezier Kurven  -->
     <script src="https://cdn.jsdelivr.net/npm/leaflet-curve@0.1.0/leaflet.curve.js"></script>
 </head>
 <header id="header">
     <span class="logo">WORLD<em>·</em>VIEW</span>
+    <nav id="tab-nav">
+        <button class="tab-btn active" data-tab="map">🌍 Karte</button>
+        <button class="tab-btn" data-tab="lexikon">📚 Lexikon</button>
+        <button class="tab-btn" data-tab="stonks">📈 Stonks</button>
+        <button class="tab-btn" data-tab="todo">✅ To-Do</button>
+    </nav>
 </header>
 
 <body>
 
+<div id="tab-map" class="tab-content active">
     <div id="map"></div>
-
     <div id="map-controls">
-    <button id="btn-oil" class="map-btn" onclick="toggleOilRoutes()">🛢 Öl-Routen</button>
-</div>
-
+        <button id="btn-oil" class="map-btn" onclick="toggleOilRoutes()">🛢 Öl-Routen</button>
+    </div>
     <div id="panel">
         <div class="ph">
             <div class="ph-left">
@@ -42,14 +48,62 @@
         </div>
         <div id="p-econ"></div>
     </div>
+</div>
 
+<div id="tab-lexikon" class="tab-content">
+    <div class="tab-inner">
+<div class="lex-header">
+    <div class="todo-title">Lexikon</div>
+    <input type="text" id="lex-search" class="todo-input" placeholder="Begriff suchen..." oninput="filterLex(this.value)" />
+    <div class="lex-filter-row">
+        <button class="lex-filter-btn active" data-kat="alle" onclick="setKategorie('alle')">Alle</button>
+        <button class="lex-filter-btn" data-kat="geopolitik" onclick="setKategorie('geopolitik')">🌍 Geopolitik</button>
+        <button class="lex-filter-btn" data-kat="finanzen" onclick="setKategorie('finanzen')">💰 Finanzen</button>
+        <button class="lex-filter-btn" data-kat="zusammenhaenge" onclick="setKategorie('zusammenhaenge')">🔗 Zusammenhänge</button>
+    </div>
+</div>
+        <div id="lex-list"></div>
+    </div>
+</div>
+<div id="tab-stonks" class="tab-content">
+    <div class="tab-inner">
+        <div class="todo-title">Stonks</div>
+        <div id="stonks-list"></div>
+    </div>
+</div>
+<div id="tab-todo" class="tab-content">
+    <div class="tab-inner">
+        <div class="todo-title">World View — To-Do</div>
+        <div class="todo-input-row">
+            <input type="text" id="todo-input" class="todo-input" placeholder="Neue Aufgabe..." />
+            <button class="todo-add-btn" onclick="addTodo()">＋</button>
+        </div>
+        <ul id="todo-list" class="todo-list"></ul>
+    </div>
+</div>
 
-    <!-- Eigenes JS -->
-    <script src="js/map.js"></script>
+<!-- Eigenes JS Datein -->
+<script src="js/map.js"></script>
+<script src="js/todo.js"></script>
+<script src="js/lexikon.js"></script>
+<script src="js/stonks.js"></script>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        if (btn.dataset.tab === 'map') setTimeout(() => map.invalidateSize(), 50);
+    });
+});
+</script>
 
 </body>
+
 <div id="footer">
     <div id="ticker">WORLD VIEW · Geopolitische Echtzeit-Daten · Mehr Features in Kürze</div>
-</div>
+    </div>
 
 </html>
